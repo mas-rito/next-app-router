@@ -22,7 +22,7 @@ export default function AdminProductPage() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center">
+    <div className="w-full h-96 bg-slate-200 flex flex-col justify-center items-center rounded-lg">
       <h1>{status}</h1>
       <button
         className="bg-red-500 text-white rounded p-3"
