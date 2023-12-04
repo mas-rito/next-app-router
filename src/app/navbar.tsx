@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const { data: session, status }: { data: any; status: string } = useSession();
   const router = useRouter();
 
   return (
@@ -22,12 +25,21 @@ const Navbar = () => {
           </Link>
           <li className="cursor-pointer">Contact</li>
         </ul>
-        <button
-          className="bg-white text-black font-semibold px-4 py-2 rounded-md"
-          onClick={() => router.push("/login")}
-        >
-          Login
-        </button>
+        {status === "authenticated" ? (
+          <button
+            className="bg-white text-black font-semibold px-4 py-2 rounded-md"
+            onClick={() => signOut()}
+          >
+            Logout
+          </button>
+        ) : (
+          <button
+            className="bg-white text-black font-semibold px-4 py-2 rounded-md"
+            onClick={() => signIn()}
+          >
+            Login
+          </button>
+        )}
       </div>
     </div>
   );
