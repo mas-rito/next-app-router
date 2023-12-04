@@ -26,12 +26,15 @@ const Navbar = () => {
           <li className="cursor-pointer">Contact</li>
         </ul>
         {status === "authenticated" ? (
-          <button
-            className="bg-white text-black font-semibold px-4 py-2 rounded-md"
-            onClick={() => signOut()}
-          >
-            Logout
-          </button>
+          <>
+            <h4>Hello, {session?.user?.fullname}</h4>
+            <button
+              className="bg-white text-black font-semibold px-4 py-2 rounded-md"
+              onClick={() => signOut()}
+            >
+              Logout
+            </button>
+          </>
         ) : (
           <button
             className="bg-white text-black font-semibold px-4 py-2 rounded-md"
