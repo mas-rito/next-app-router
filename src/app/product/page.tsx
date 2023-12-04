@@ -1,62 +1,38 @@
+import { getData } from "@/services/products";
+import Link from "next/link";
+
 type ProductPageProps = {
   params: {
     slug: string;
   };
 };
 
-async function getData() {
-  const res = await fetch("https://fakestoreapi.com/products", {
-    cache: "no-store",
-  });
-
-  // const res = await fetch("http://localhost:3000/api/product", {
-  //   cache: "force-cache",
-  //   next: {
-  //     tags: ["products"],
-  //     // revalidate: 30
-  //   },
-  // });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
-
 export default async function ProductPage(props: ProductPageProps) {
   const { params } = props;
-  const products = await getData();
+  const products = await getData("http://localhost:3000/api/product");
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
       <h1>Product slug</h1>
-      {products.length > 0 && (
+      {products.data.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-5">
-          {products.map((product: any) => (
-            <div
+          {products.data.map((product: any) => (
+            <Link
+              href={`/product/detail/${product.id}`}
               key={product.id}
               className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md"
             >
-              <a
-                className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
-                href="#"
-              >
+              <div className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
                 <img
-                  className="object-cover"
+                  className="w-full object-cover"
                   src={product.image}
                   alt={product.title}
                 />
-                <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
-                  39% OFF
-                </span>
-              </a>
+              </div>
               <div className="mt-4 px-5 pb-5">
-                <a href="#">
-                  <h5 className="text-xl tracking-tight text-slate-900 truncate">
-                    {product.title}
-                  </h5>
-                </a>
+                <h5 className="text-xl tracking-tight text-slate-900 truncate">
+                  {product.title}
+                </h5>
                 <div className="mt-2 mb-5 flex items-center justify-between">
                   <p>
                     <span className="text-3xl font-bold text-slate-900">
@@ -64,8 +40,8 @@ export default async function ProductPage(props: ProductPageProps) {
                     </span>
                   </p>
                 </div>
-                <a
-                  href="#"
+                <button
+                  type="button"
                   className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
                 >
                   <svg
@@ -83,9 +59,9 @@ export default async function ProductPage(props: ProductPageProps) {
                     />
                   </svg>
                   Add to cart
-                </a>
+                </button>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}
