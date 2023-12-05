@@ -1,4 +1,5 @@
 import { getData } from "@/services/products";
+import Image from "next/image";
 import Link from "next/link";
 
 type ProductPageProps = {
@@ -23,10 +24,13 @@ export default async function ProductPage(props: ProductPageProps) {
               className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md"
             >
               <div className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
-                <img
+                <Image
                   className="w-full object-cover"
                   src={product.image}
                   alt={product.title}
+                  width={700}
+                  height={700}
+                  loading="lazy"
                 />
               </div>
               <div className="mt-4 px-5 pb-5">

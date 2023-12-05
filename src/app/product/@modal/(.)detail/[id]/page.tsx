@@ -1,5 +1,7 @@
-import Modal from "@/components/layouts/Modal";
 import { getData } from "@/services/products";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+const Modal = dynamic(() => import("@/components/layouts/Modal"));
 
 export default async function ProductDetailPage(props: any) {
   const { params } = props;
@@ -10,10 +12,12 @@ export default async function ProductDetailPage(props: any) {
   return (
     <Modal>
       <div className="h-[350px] sm:h-[450px]">
-        <img
+        <Image
           src={product.data.image}
           alt={product.data.title}
           className="h-full w-full object-cover rounded-t"
+          width={500}
+          height={500}
         />
       </div>
       <div className="relative bg-white p-3 rounded-b">
