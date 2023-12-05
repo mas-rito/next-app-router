@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function Login() {
+export default function Login({ searchParams }: { searchParams: any }) {
   const { push } = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -18,9 +18,10 @@ export default function Login() {
         email: e.currentTarget.email.value,
         password: e.currentTarget.password.value,
         redirect: false,
+        callbackUrl: searchParams?.callbackUrl || "/",
       });
       if (res?.ok) {
-        push("/dashboard");
+        push(searchParams?.callbackUrl || "/");
         e.target.reset();
         setIsLoading(false);
       } else {

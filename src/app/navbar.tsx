@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { signIn, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const pathname = usePathname();
   const { data: session, status }: { data: any; status: string } = useSession();
-  const router = useRouter();
 
   return (
     <div className="flex w-full bg-slate-600 text-white py-4 px-10 justify-between fixed top-0 left-0 z-20">
